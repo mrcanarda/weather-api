@@ -15,6 +15,23 @@ app.use(express.urlencoded({ extended: true }));
 const WEATHER_API_KEY = process.env.WEATHER_API_KEY;
 const WEATHER_API_BASE_URL = 'https://api.openweathermap.org/data/2.5';
 
+// Root endpoint
+app.get('/', (req, res) => {
+  res.json({ 
+    message: 'Welcome to Weather API',
+    version: '1.0.0',
+    endpoints: {
+      health: 'GET /health',
+      currentWeather: 'GET /api/weather/current?city=<city_name>',
+      currentWeatherByCoordinates: 'GET /api/weather/current/coordinates?lat=<latitude>&lon=<longitude>',
+      forecast: 'GET /api/weather/forecast?city=<city_name>',
+      forecastByCoordinates: 'GET /api/weather/forecast/coordinates?lat=<latitude>&lon=<longitude>'
+    },
+    documentation: 'See README.md for detailed documentation',
+    timestamp: new Date().toISOString()
+  });
+});
+
 // Health check endpoint
 app.get('/health', (req, res) => {
   res.json({ 
@@ -367,4 +384,5 @@ app.listen(PORT, () => {
 });
 
 module.exports = app;
+
 
